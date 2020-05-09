@@ -251,7 +251,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
             The predicted categories.
         """
 
-        y = self.scaler.fit_transform(y)
+        y = self.scaler.fit_transform(y.T).T
 
         # Use the median when the threshold is not specified
         if self.threshold is None:
