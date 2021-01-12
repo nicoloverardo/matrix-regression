@@ -1,4 +1,8 @@
 # Matrix Regression
+
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+![Lines of code](https://img.shields.io/tokei/lines/github/nicoloverardo/matrix_regression)
+
 Implementation of the MatrixRegression (MR) algorithm for multi-label text classification that can be used in an online learning context. It is presented in the following paper:
 
 [Popa, I. & Zeitouni, Karine & Gardarin, Georges & Nakache, Didier & Métais, Elisabeth. (2007). Text Categorization for Multi-label Documents and Many Categories. 421 - 426. 10.1109/CBMS.2007.108.](https://www.researchgate.net/publication/4257876_Text_Categorization_for_Multi-label_Documents_and_Many_Categories)

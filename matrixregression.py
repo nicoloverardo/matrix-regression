@@ -1,23 +1,21 @@
 # This python module was made as part of
-# the Text Mining and Sentiment Analysis 
+# the Text Mining and Sentiment Analysis
 # exam project (2020).
 #
 # Author: Nicolò Verardo
 #
 # License: MIT License
 
-import numpy as np
-
 import multiprocessing
-from joblib import Parallel, delayed
-
+import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.preprocessing import MinMaxScaler
 
 from online_vectorizers.online_vectorizers import OnlineTfidfVectorizer
 
+
 class MatrixRegression(BaseEstimator, ClassifierMixin):
-    """ 
+    """
     Implementation of the MatrixRegression (MR) algorithm
     as presented in the following paper:
 
@@ -33,7 +31,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         Must be in the range (0, 1).
 
     n_jobs : int (default=None)
-        The number of jobs to run in parallel. Fit, partial_fit 
+        The number of jobs to run in parallel. Fit, partial_fit
         and predict will be parallelized. -1 means using all processors.
     """
 
@@ -41,10 +39,10 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         self.threshold = threshold
         self.n_jobs = n_jobs
         self.vectorizer = OnlineTfidfVectorizer()
-        self.scaler = MinMaxScaler(copy = False)
+        self.scaler = MinMaxScaler(copy=False)
 
     def fit(self, X, y):
-        """ 
+        """
         Fit the MatrixRegression algorithm
 
         Parameters
@@ -54,7 +52,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
         y : array-like of shape (n_documents, n_labels)
             The target labels of the documents (i.e.: the categories)
-        
+
         Returns
         -------
         self : object
@@ -62,7 +60,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
         if self.threshold is not None:
             if self.threshold <= 0 or self.threshold >= 1:
-                raise ValueError('The threshold must be between 0 and 1.')
+                raise ValueError("The threshold must be between 0 and 1.")
 
         if self.n_jobs is None or self.n_jobs == 0:
             self.n_jobs = 1
@@ -71,27 +69,30 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         else:
             self.n_jobs = multiprocessing.cpu_count()
 
-
         X_tfidf = self.vectorizer.fit_transform(X)
         n_documents, n_terms = X_tfidf.shape
 
         n_categories = self._get_number_catgories(y)
 
-        self.terms = np.array(self.vectorizer.get_feature_names(), dtype = 'object')
+        self.terms = np.array(self.vectorizer.get_feature_names(), dtype="object")
 
         self.W = np.zeros((n_terms, n_categories))
 
         # TODO: parallelize
         for d in range(n_documents):
-            x_nnz = X_tfidf[d,].nonzero()[1]
-            y_nnz = y[d,].nonzero()[0]
+            x_nnz = X_tfidf[
+                d,
+            ].nonzero()[1]
+            y_nnz = y[
+                d,
+            ].nonzero()[0]
 
             self._set_weights_values(X_tfidf, x_nnz, y_nnz, d)
 
         return self
-    
+
     def partial_fit(self, X, y):
-        """ 
+        """
         Update the algorithm with new data without
         re-training it from scratch.
 
@@ -102,7 +103,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
         y : array-like of shape (n_documents, n_labels)
             The target labels of the documents (i.e.: the categories)
-        
+
         Returns
         -------
         self : object
@@ -116,18 +117,21 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
         # Get index of the common terms.
         # Probably this is gonna be slow
-        vocab_to_update = { k : old_vocab[k] for k in ct.intersection(set(old_vocab)) }
+        vocab_to_update = {k: old_vocab[k] for k in ct.intersection(set(old_vocab))}
 
         X_tfidf = self.vectorizer.partial_refit_transform(X)
 
         # Get index of the out-of-vocabulary terms only
         # Same perfomance as above?
-        oov_terms = { k : self.vectorizer.vocabulary_[k] for k in set(self.vectorizer.vocabulary_) - set(old_vocab) }
+        oov_terms = {
+            k: self.vectorizer.vocabulary_[k]
+            for k in set(self.vectorizer.vocabulary_) - set(old_vocab)
+        }
 
-        # Get all the terms to update 
+        # Get all the terms to update
         vocab_to_update.update(oov_terms)
 
-        n_terms_to_update = len(vocab_to_update)
+        # n_terms_to_update = len(vocab_to_update)
         n_oov_terms = len(oov_terms)
 
         # y must contain both the old categories
@@ -137,26 +141,33 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         # Expand W.
         # Probably self.W.resize is faster?
         if n_oov_terms > 0:
-            self.W = np.concatenate((self.W, 
-                                     np.zeros((n_oov_terms, self.W.shape[1]))))
+            self.W = np.concatenate((self.W, np.zeros((n_oov_terms, self.W.shape[1]))))
         if n_new_categories > 0:
-            self.W = np.concatenate((self.W, 
-                                     np.zeros((self.W.shape[0], n_new_categories))), axis = 1)
+            self.W = np.concatenate(
+                (self.W, np.zeros((self.W.shape[0], n_new_categories))), axis=1
+            )
 
         terms_to_update = np.fromiter(vocab_to_update.values(), dtype=int)
 
         n_documents = X_tfidf.shape[0]
 
-        self.terms = np.array(self.vectorizer.get_feature_names(), dtype = 'object')
+        self.terms = np.array(self.vectorizer.get_feature_names(), dtype="object")
 
         for d in range(n_documents):
             # Get only the terms that we need to update
-            x_nnz = np.intersect1d(X_tfidf[d,].nonzero()[1], terms_to_update)
+            x_nnz = np.intersect1d(
+                X_tfidf[
+                    d,
+                ].nonzero()[1],
+                terms_to_update,
+            )
 
             # Still need to check that
             # x_nnz and/or y_nnz are not empty
-            y_nnz = y[d,].nonzero()[0]
-        
+            y_nnz = y[
+                d,
+            ].nonzero()[0]
+
             # Set the weights of terms we need to update
             # to zero. This should be faster:
             #
@@ -166,7 +177,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
             for i in x_nnz:
                 for j in y_nnz:
-                    self.W[i,j] = 0
+                    self.W[i, j] = 0
 
             self._set_weights_values(X_tfidf, x_nnz, y_nnz, d)
 
@@ -175,7 +186,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
     def _set_weights_values(self, X, x_nnz, y_nnz, d):
         for i in x_nnz:
             for j in y_nnz:
-                self.W[i,j] += X[d,i]
+                self.W[i, j] += X[d, i]
 
     def _get_number_catgories(self, y):
         """
@@ -200,8 +211,8 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         elif isinstance(y, list):
             return len(y)
         else:
-            raise ValueError('Cannot get the number of categories.')
-    
+            raise ValueError("Cannot get the number of categories.")
+
     def _compute_weights(self, X):
         """
         Compute the categories weights for new data X.
@@ -222,8 +233,8 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         y = np.zeros((X.shape[0], self.W.shape[1]), dtype=int)
 
         # TODO: parallelize
-        for i in range(X.shape[0]):          
-            T_d = np.sort(np.array(tokenizer(X[i]), dtype = 'object'))
+        for i in range(X.shape[0]):
+            T_d = np.sort(np.array(tokenizer(X[i]), dtype="object"))
 
             T_prime, x_ind, _ = np.intersect1d(self.terms, T_d, return_indices=True)
 
@@ -232,8 +243,10 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
             W_prime = np.dot(F, self.W)
 
-            y[i,] = W_prime
-        
+            y[
+                i,
+            ] = W_prime
+
         return y
 
     def _predict_categories(self, y):
@@ -244,7 +257,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         ----------
         y : array-like of shape (n_documents, n_labels)
             The predicted categories weights (i.e.: W')
-        
+
         Returns
         -------
         y : array-like of shape (n_documents, n_labels)
@@ -262,7 +275,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         return y
 
     def predict(self, X):
-        """ 
+        """
         Predict categories for the documents in X
 
         Parameters
