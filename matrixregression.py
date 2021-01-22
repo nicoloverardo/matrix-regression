@@ -78,7 +78,6 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
         self.W = np.zeros((n_terms, n_categories))
 
-        # TODO: parallelize
         for d in range(n_documents):
             x_nnz = X_tfidf[
                 d,
@@ -206,8 +205,8 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         if isinstance(y, np.ndarray):
             if y.ndim == 2:
                 return y.shape[1]
-            else:
-                return 1
+
+            return 1
         elif isinstance(y, list):
             return len(y)
         else:
@@ -232,7 +231,6 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         tokenizer = self.vectorizer.build_tokenizer()
         y = np.zeros((X.shape[0], self.W.shape[1]), dtype=int)
 
-        # TODO: parallelize
         for i in range(X.shape[0]):
             T_d = np.sort(np.array(tokenizer(X[i]), dtype="object"))
 
