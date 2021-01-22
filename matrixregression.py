@@ -207,10 +207,11 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
                 return y.shape[1]
 
             return 1
-        elif isinstance(y, list):
+
+        if isinstance(y, list):
             return len(y)
-        else:
-            raise ValueError("Cannot get the number of categories.")
+
+        raise ValueError("Cannot get the number of categories.")
 
     def _compute_weights(self, X):
         """
