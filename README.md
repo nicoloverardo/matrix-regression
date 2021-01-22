@@ -1,6 +1,7 @@
 # Matrix Regression
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![CodeFactor](https://www.codefactor.io/repository/github/nicoloverardo/matrix_regression/badge/main)](https://www.codefactor.io/repository/github/nicoloverardo/matrix_regression/overview/main)
 ![Lines of code](https://img.shields.io/tokei/lines/github/nicoloverardo/matrix_regression)
 
 Implementation of the MatrixRegression (MR) algorithm for multi-label text classification that can be used in an online learning context. It is presented in the following paper:
