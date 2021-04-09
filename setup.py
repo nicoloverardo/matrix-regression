@@ -1,8 +1,9 @@
 from distutils.core import setup
+from setuptools import find_packages
 
 setup(
     name="matrixreg",
-    packages=["matrixreg"],
+    packages=find_packages(),
     version="0.1",
     license="MIT",
     description="Implementation of the MatrixRegression (MR) algorithm for online-learning multi-label text classification, by Popa, Zeitouni & Gardarin",
