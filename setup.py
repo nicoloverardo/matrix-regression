@@ -25,7 +25,7 @@ setup(
     author="Nicolò Verardo",
     author_email="n.verardo@outlook.com",
     url="https://github.com/nicoloverardo/matrix_regression",
-    download_url="https://github.com/nicoloverardo/matrix_regression/archive/refs/tags/v0.1.tar.gz",
+    download_url="https://github.com/nicoloverardo/matrix_regression/archive/refs/tags/v0.1.1.tar.gz",
     keywords=["text-classification", "multi-label-classification", "online-learning"],
     install_requires=[
         "numpy>=1.18.5",
