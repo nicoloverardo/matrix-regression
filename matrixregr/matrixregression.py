@@ -289,4 +289,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
             The predicted categories.
         """
 
+        if isinstance(X, list):
+            X = np.array(X)
+
         return self._predict_categories(self._compute_weights(X))
