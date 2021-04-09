@@ -1,6 +1,5 @@
 from distutils.core import setup
 from setuptools import find_packages
-import sys
 
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -9,9 +8,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="matrixreg",
-    packages=find_packages(where="matrixregr"),
-    package_dir={"": "matrixregr"},
-    version="0.1",
+    packages=find_packages(),
+    version="0.1.1",
     license="MIT",
     description="Implementation of the MatrixRegression (MR) algorithm for online-learning multi-label text classification, by Popa, Zeitouni & Gardarin",
     long_description=long_description,
