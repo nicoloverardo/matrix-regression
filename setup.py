@@ -2,25 +2,19 @@ from distutils.core import setup
 from setuptools import find_packages
 import sys
 
-from pathlib import Path  # noqa E402
 
-CURRENT_DIR = Path(__file__).parent
-sys.path.insert(0, str(CURRENT_DIR))
-
-
-def get_long_description() -> str:
-    return (
-        (CURRENT_DIR / "README.md").read_text(encoding="utf8")
-    )
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 
 setup(
     name="matrixreg",
-    packages=find_packages(),
+    packages=find_packages(where="matrixregr"),
+    package_dir={"": "matrixregr"},
     version="0.1",
     license="MIT",
     description="Implementation of the MatrixRegression (MR) algorithm for online-learning multi-label text classification, by Popa, Zeitouni & Gardarin",
-    long_description=get_long_description(),
+    long_description=long_description,
     long_description_content_type="text/markdown",
     author="Nicolò Verardo",
     author_email="n.verardo@outlook.com",
