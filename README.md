@@ -5,6 +5,7 @@
 ![PyPI](https://img.shields.io/pypi/v/matrixreg)
 [![codecov](https://codecov.io/gh/nicoloverardo/matrix_regression/branch/main/graph/badge.svg)](https://codecov.io/gh/nicoloverardo/matrix_regression)
 ![Lines of code](https://img.shields.io/tokei/lines/github/nicoloverardo/matrix_regression)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/matrixreg)
 
 Table of contents:
 
