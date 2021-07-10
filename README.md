@@ -7,6 +7,9 @@
 ![Lines of code](https://img.shields.io/tokei/lines/github/nicoloverardo/matrix_regression)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/matrixreg)
 
+<a href="https://www.buymeacoffee.com/nicoloverardo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
+
 Table of contents:
 
 00. [Description](#description)
