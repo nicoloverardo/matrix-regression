@@ -1,6 +1,7 @@
 # Matrix Regression
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Requirements Status](https://requires.io/github/nicoloverardo/matrix_regression/requirements.svg?branch=main)](https://requires.io/github/nicoloverardo/matrix_regression/requirements/?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/nicoloverardo/matrix_regression/badge/main)](https://www.codefactor.io/repository/github/nicoloverardo/matrix_regression/overview/main)
 ![PyPI](https://img.shields.io/pypi/v/matrixreg)
 [![codecov](https://codecov.io/gh/nicoloverardo/matrix_regression/branch/main/graph/badge.svg)](https://codecov.io/gh/nicoloverardo/matrix_regression)
