@@ -1,14 +1,15 @@
 # Matrix Regression
 
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Requirements Status](https://requires.io/github/nicoloverardo/matrix_regression/requirements.svg?branch=main)](https://requires.io/github/nicoloverardo/matrix_regression/requirements/?branch=main)
 [![CodeFactor](https://www.codefactor.io/repository/github/nicoloverardo/matrix_regression/badge/main)](https://www.codefactor.io/repository/github/nicoloverardo/matrix_regression/overview/main)
-![PyPI](https://img.shields.io/pypi/v/matrixreg)
 [![codecov](https://codecov.io/gh/nicoloverardo/matrix_regression/branch/main/graph/badge.svg)](https://codecov.io/gh/nicoloverardo/matrix_regression)
-![Lines of code](https://img.shields.io/tokei/lines/github/nicoloverardo/matrix_regression)
+![PyPI](https://img.shields.io/pypi/v/matrixreg?label=version)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/matrixreg)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/matrixreg)
+![GitHub](https://img.shields.io/github/license/nicoloverardo/matrix_regression?color=green)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-<a href="https://www.buymeacoffee.com/nicoloverardo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
+<a href="https://www.buymeacoffee.com/nicoloverardo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="30" width="120"></a>
 
 
 Table of contents:
@@ -27,6 +28,8 @@ Abstract:
 
 
 ## Installation
+Via PyPi using pip, as easy as:
+
 ```bash
 pip install matrixreg
 ```
