@@ -1,28 +1,23 @@
-# This python module was made as part of
-# the Text Mining and Sentiment Analysis
-# exam project (2020).
-#
-# Author: Nicolò Verardo
-#
-# License: MIT License
+"""Matrix Regression
+
+This python module was originally created as part of
+the Text Mining and Sentiment Analysis exam project (2020).
+
+Author: Nicolò Verardo
+
+License: MIT License
+"""
 
 import multiprocessing
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.preprocessing import MinMaxScaler
-
-from online_vectorizers.online_vectorizers import OnlineTfidfVectorizer
+from matrixregr.online_vectorizers import OnlineTfidfVectorizer
 
 
 class MatrixRegression(BaseEstimator, ClassifierMixin):
-    """
-    Implementation of the MatrixRegression (MR) algorithm
-    as presented in the following paper:
-
-    Popa, I. & Zeitouni, Karine & Gardarin, Georges & Nakache,
-    Didier & Métais, Elisabeth. (2007). Text Categorization for
-    Multi-label Documents and Many Categories.
-    421 - 426. 10.1109/CBMS.2007.108.
+    """Implementation of the MatrixRegression (MR) algorithm
+    for multi-label text classification.
 
     Parameters
     ----------
@@ -33,6 +28,16 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
     n_jobs : int (default=None)
         The number of jobs to run in parallel. Fit, partial_fit
         and predict will be parallelized. -1 means using all processors.
+    
+    Notes
+    -----
+    The implementation is as close as possible to the
+    algorithm as described in the original paper:
+    
+    Popa, I. & Zeitouni, Karine & Gardarin, Georges & Nakache,
+    Didier & Métais, Elisabeth. (2007). Text Categorization for
+    Multi-label Documents and Many Categories.
+    421 - 426. 10.1109/CBMS.2007.108.
     """
 
     def __init__(self, threshold=None, n_jobs=None):
