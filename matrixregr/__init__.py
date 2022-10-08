@@ -6,6 +6,7 @@ the Text Mining and Sentiment Analysis exam project (2020).
 Author: Nicolò Verardo
 
 License: MIT License
+
 .. include:: ../README.md
 """
 

@@ -29,7 +29,7 @@ classifiers = [
 dependencies = [
     "numpy>=1.18.5",
     "scipy>=1.4.1",
-    "scikit_learn>=0.24.1"
+    "scikit_learn==0.24.1"
 ]
 
 [project.optional-dependencies]
@@ -56,10 +56,11 @@ packages = ["matrixreg"]
 name = "matrixreg"
 
 [tool.pylint.format]
-max-line-length = "88"
+max-line-length = 88
 
 [tool.pylint.main]
-ignore = "online_vectorizers"
+ignore-paths = ["matrixreg\\\\online_vectorizers|matrixreg/online_vectorizers", "online_vectorizers.py|online_vectorizers.py", "tests|tests", "tests\\\\*|tests/*", "test_main.py|test_main.py"]
+jobs = 0
 
 [project.urls]
 homepage = "https://github.com/nicoloverardo/matrix_regression"
