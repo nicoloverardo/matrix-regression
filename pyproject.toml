@@ -62,6 +62,9 @@ max-line-length = 88
 ignore-paths = ["matrixreg\\\\online_vectorizers|matrixreg/online_vectorizers", "online_vectorizers.py|online_vectorizers.py", "tests|tests", "tests\\\\*|tests/*", "test_main.py|test_main.py"]
 jobs = 0
 
+[tool.coverage.run]
+omit = ["matrixregr/online_vectorizers.py"]
+
 [project.urls]
 homepage = "https://github.com/nicoloverardo/matrix_regression"
 documentation = "https://github.com/nicoloverardo/matrix_regression"
