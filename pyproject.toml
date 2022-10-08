@@ -47,13 +47,13 @@ dev = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "matrixreg.__version__"}
+version = {attr = "matrixregr.__version__"}
 
 [tool.setuptools]
-packages = ["matrixreg"]
+packages = ["matrixregr"]
 
 [tool.flit.module]
-name = "matrixreg"
+name = "matrixregr"
 
 [tool.pylint.format]
 max-line-length = 88
