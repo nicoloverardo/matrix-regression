@@ -28,27 +28,30 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
     n_jobs : int (default=None)
         The number of jobs to run in parallel. Fit, partial_fit
         and predict will be parallelized. -1 means using all processors.
-    
+
     Notes
     -----
     The implementation is as close as possible to the
     algorithm as described in the original paper:
-    
+
     Popa, I. & Zeitouni, Karine & Gardarin, Georges & Nakache,
     Didier & Métais, Elisabeth. (2007). Text Categorization for
     Multi-label Documents and Many Categories.
     421 - 426. 10.1109/CBMS.2007.108.
     """
 
-    def __init__(self, threshold=None, n_jobs=None):
+    def __init__(self, threshold: float = None, n_jobs: int = None):
         self.threshold = threshold
         self.n_jobs = n_jobs
+
         self.vectorizer = OnlineTfidfVectorizer()
         self.scaler = MinMaxScaler(copy=False)
 
+        self.terms = None
+        self.W = None
+
     def fit(self, X, y):
-        """
-        Fit the MatrixRegression algorithm
+        """Fit the MatrixRegression algorithm.
 
         Parameters
         ----------
@@ -57,10 +60,6 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
         y : array-like of shape (n_documents, n_labels)
             The target labels of the documents (i.e.: the categories)
-
-        Returns
-        -------
-        self : object
         """
 
         if self.threshold is not None:
@@ -93,11 +92,8 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
             self._set_weights_values(X_tfidf, x_nnz, y_nnz, d)
 
-        return self
-
     def partial_fit(self, X, y):
-        """
-        Update the algorithm with new data without
+        """Update the algorithm with new data without
         re-training it from scratch.
 
         Parameters
@@ -107,10 +103,6 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
         y : array-like of shape (n_documents, n_labels)
             The target labels of the documents (i.e.: the categories)
-
-        Returns
-        -------
-        self : object
         """
 
         old_vocab = self.vectorizer.vocabulary_.copy()
@@ -185,16 +177,13 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
 
             self._set_weights_values(X_tfidf, x_nnz, y_nnz, d)
 
-        return self
-
     def _set_weights_values(self, X, x_nnz, y_nnz, d):
         for i in x_nnz:
             for j in y_nnz:
                 self.W[i, j] += X[d, i]
 
     def _get_number_catgories(self, y):
-        """
-        Get the number of categories from the labels.
+        """Get the number of categories from the labels.
 
         Parameters
         ----------
@@ -219,8 +208,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         raise ValueError("Cannot get the number of categories.")
 
     def _compute_weights(self, X):
-        """
-        Compute the categories weights for new data X.
+        """Compute the categories weights for new data X.
 
         Parameters
         ----------
@@ -254,8 +242,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         return y
 
     def _predict_categories(self, y):
-        """
-        Filter categories using the threshold value.
+        """Filter categories using the threshold value.
 
         Parameters
         ----------
@@ -279,8 +266,7 @@ class MatrixRegression(BaseEstimator, ClassifierMixin):
         return y
 
     def predict(self, X):
-        """
-        Predict categories for the documents in X
+        """Predict categories for the documents in X.
 
         Parameters
         ----------
